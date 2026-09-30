@@ -1,0 +1,18 @@
+# Compilados Java
+bin/
+out/
+target/
+
+# Arquivos de build
+*.class
+
+# Configurações do VS Code
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.temp
