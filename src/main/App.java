@@ -12,6 +12,7 @@ public class App {
         Musica musica;
         Musica encontrada;
 
+        String album;
         String titulo;
         String artista;
         int duracaoSegundos;
@@ -73,10 +74,13 @@ public class App {
                         System.out.print("\nQual o nome do artista? -> ");
                         artista = scan.nextLine();
 
+                        System.out.print("\nQual o nome do Álbum? -> ");
+                        album = scan.nextLine();
+
                         System.out.print("\nQuantos segundos a música possui? -> ");
                         duracaoSegundos = Integer.parseInt(scan.nextLine());
 
-                        musica = new Musica(titulo, artista, duracaoSegundos);
+                        musica = new Musica(titulo, artista, duracaoSegundos, album);
 
                         if (sonora.cadastrarMusica(musica)) {
                             System.out.printf("\n%dª Música da Sonora cadastrada com suceso",

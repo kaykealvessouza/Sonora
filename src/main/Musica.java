@@ -1,72 +1,50 @@
 package main;
-public class Musica {
 
-    private int id;
-    private static int contadorId = 1;
+public class Musica extends Conteudo {
 
-    private String titulo;
+
     private String artista;
 
-    private int duracaoSegundos;
-    private int reproducoes;
+    private String album;
 
-    public Musica(String titulo, String artista, int duracaoSegundos) {
+    public Musica(String titulo, String artista, int duracaoSegundos, String album) {
 
-        if (titulo == null || titulo.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Título inválido: o título não pode ser vazio.");
-        }
+        super(titulo, duracaoSegundos);
 
-        if (artista == null || artista.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Artista inválido: o artista não pode ser vazio.");
-        }
-
-        if (duracaoSegundos <= 0) {
-            throw new IllegalArgumentException(
-                    "Duração inválida: " + duracaoSegundos +
-                            ". A duração deve ser maior que zero.");
-        }
-
-        this.id = contadorId;
-        contadorId++;
-
-        this.titulo = titulo;
-        this.artista = artista;
-        this.duracaoSegundos = duracaoSegundos;
-        this.reproducoes = 0;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitulo() {
-        return titulo;
+        setArtista(artista);
+        setAlbum(album);
     }
 
     public String getArtista() {
         return artista;
     }
 
-    public int getDuracaoSegundos() {
-        return duracaoSegundos;
+    public void setArtista(String artista){
+
+        if (artista == null || artista.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Artista inválido: o artista não pode ser vazio.");
+        }
+
+        this.artista = artista;
     }
 
-    public int getReproducoes() {
-        return reproducoes;
+    public String getAlbum(){
+        return this.album;
     }
 
-    public void reproduzir() {
-        this.reproducoes++;
+    public void setAlbum(String album){
+
+        if (album == null || album.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Álbum inválido: o álbum não pode ser vazio.");
+        }
+
+        this.album = album;
     }
 
-    public String getDuracaoFormatada() {
-        int segundos = this.duracaoSegundos;
-
-        int minutos = segundos / 60;
-        segundos = segundos % 60;
-
-        return String.format("%02d:%02d", minutos, segundos);
+    @Override
+    public String toString() {
+        return super.toString() + " - " + artista + " (" + album + ")";
     }
 }

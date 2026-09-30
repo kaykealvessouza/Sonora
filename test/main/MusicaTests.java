@@ -13,35 +13,35 @@ public class MusicaTests {
     @Test
     @DisplayName("Duração com minutos e segundos 125 -> 02:05")
     void validaDuracaoFormatada125() {
-        musica1 = new Musica("Ride", banda, 125);
+        musica1 = new Musica("Ride", banda, 125, "Blurryface");
         assertEquals("02:05", musica1.getDuracaoFormatada());
     }
 
     @Test
     @DisplayName("Duração com minutos e segundos 90 -> 01:30")
     void validaDuracaoFormatada90() {
-        musica1 = new Musica("HeavyDirty Soul", banda, 90);
+        musica1 = new Musica("HeavyDirty Soul", banda, 90, "Blurryface");
         assertEquals("01:30", musica1.getDuracaoFormatada());
     }
 
     @Test
     @DisplayName("Duração com minutos e segundos 5 -> 00:05")
     void validaDuracaoFormatada5() {
-        musica1 = new Musica("Stressed out", banda, 5);
+        musica1 = new Musica("Stressed out", banda, 5, "Blurryface");
         assertEquals("00:05", musica1.getDuracaoFormatada());
     }
 
     @Test
     @DisplayName("Duração com minutos e segundos 600 -> 10:00")
     void validaDuracaoFormatada600() {
-        musica1 = new Musica("Chlorine", banda, 600);
+        musica1 = new Musica("Chlorine", banda, 600, "Blurryface");
         assertEquals("10:00", musica1.getDuracaoFormatada());
     }
 
     @Test
     @DisplayName("Duração com minutos e segundos 599 -> 09:59")
     void validaDuracaoFormatada599() {
-        musica1 = new Musica("Lane boy", banda, 599);
+        musica1 = new Musica("Lane boy", banda, 599, "Blurryface");
         assertEquals("09:59", musica1.getDuracaoFormatada());
     }
 
@@ -50,7 +50,7 @@ public class MusicaTests {
     void validaTituloVazio() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Musica("", "Queen", 355));
+                () -> new Musica("", "Queen", 355, "Queens"));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class MusicaTests {
     void validaTituloNulo() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Musica(null, "Queen", 355));
+                () -> new Musica(null, "Queen", 355, "Queens"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class MusicaTests {
     void validaArtistaVazio() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Musica("Bohemian Rhapsody", "", 355));
+                () -> new Musica("Bohemian Rhapsody", "", 355, "Queens"));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class MusicaTests {
     void duracaoZero() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Musica("Bohemian Rhapsody", "Queen", 0));
+                () -> new Musica("Bohemian Rhapsody", "Queen", 0, "Queens"));
     }
 
     @Test
@@ -82,13 +82,13 @@ public class MusicaTests {
     void duracaoNegativa() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Musica("Bohemian Rhapsody", "Queen", -10));
+                () -> new Musica("Bohemian Rhapsody", "Queen", -10, "Queens"));
     }
 
     @Test
     @DisplayName("Tudo válido cria a música com id maior que zero")
     void criaMusicaCorretamente() {
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
 
         assertNotNull(musica1);
 
@@ -98,7 +98,7 @@ public class MusicaTests {
     @Test
     @DisplayName("Reprodução válida aumenta contador em um")
     void reproduzirMusicaValida(){
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
 
         musica1.reproduzir();
 
@@ -108,7 +108,7 @@ public class MusicaTests {
     @Test
     @DisplayName("Reproduzir cinco vezes uma música válida aumentando contador")
     void reproduzirMusicaValidaCincoVezes(){
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
 
         for (int i = 0; i < 5; i++){
             musica1.reproduzir();
@@ -119,7 +119,7 @@ public class MusicaTests {
     @Test
     @DisplayName("Reproduzir várias vezes uma música válida aumentando contador")
     void reproduzirMusicaValidaVariasVezes(){
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
 
         for (int i = 0; i < 1000; i++){
             musica1.reproduzir();
@@ -131,8 +131,8 @@ public class MusicaTests {
     @DisplayName("Ids de músicas devem ser sequanciais")
     void validaIdSequencialMusicas(){
 
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
-        Musica musica2 = new Musica("Chlorine", banda, 600);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
+        Musica musica2 = new Musica("Chlorine", banda, 600, "Blurryface");
 
         assertEquals(musica1.getId() + 1, musica2.getId());
     }
@@ -151,9 +151,9 @@ public class MusicaTests {
     @DisplayName ("Ids de músicas e usuários devem ser idependentes")
     void validaIdMusicaDiferenteUsuario(){
 
-        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        musica1 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
         Usuario user2 = new Usuario("b", "b@");
-        Musica musica2 = new Musica("Bohemian Rhapsody", "Queen", 355);
+        Musica musica2 = new Musica("Bohemian Rhapsody", "Queen", 355, "Queens");
 
         assertNotEquals(user2.getId() + 1, user2.getId());
 

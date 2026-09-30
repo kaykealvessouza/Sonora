@@ -17,13 +17,13 @@ public class PlaylistTests {
         Usuario user = new Usuario("User1", "User@");
         playlist = new Playlist("Play  ", user);
 
-        musica1 = new Musica("Ride", "Twenty on Pilots", 134);
-        musica2 = new Musica("Do I Wanna Know?", "Artic Monkeys", 134);
+        musica1 = new Musica("Ride", "Twenty on Pilots", 134, "album");
+        musica2 = new Musica("Do I Wanna Know?", "Artic Monkeys", 134, "album");
     }
 
     private void preencherPlaylist(int quantidade) {
         for (int i = 1; i <= quantidade; i++) {
-            playlist.adicionar(new Musica("Musica " + i, "Artista", 180));
+            playlist.adicionar(new Musica("Musica " + i, "Artista", 180, "album"));
         }
     }
 
@@ -86,9 +86,9 @@ public class PlaylistTests {
     @DisplayName("Remover música válida da playlist")
     void removerMusicaValida() {
 
-        Musica musica3 = new Musica("505", "Artic Monkeys", 134);
-        Musica musica4 = new Musica("Why'd You Only Call Me When You're High?", "Artic Monkeys", 134);
-        Musica musica5 = new Musica("Jane!", "The Long Faces", 134);
+        Musica musica3 = new Musica("505", "Artic Monkeys", 134, "album");
+        Musica musica4 = new Musica("Why'd You Only Call Me When You're High?", "Artic Monkeys", 134, "album");
+        Musica musica5 = new Musica("Jane!", "The Long Faces", 134, "album");
 
         assertTrue(playlist.adicionar(musica1));
         assertTrue(playlist.adicionar(musica2));

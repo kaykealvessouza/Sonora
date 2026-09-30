@@ -1,4 +1,4 @@
-# Sonora — Lista 09
+# Sonora — fase 06
 
 Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos** da Universidade Regional de Blumenau (FURB).
 

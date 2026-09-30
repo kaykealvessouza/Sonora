@@ -17,9 +17,9 @@ public class PlataformaTests {
     void prepararTestes(){
         sonora = new Plataforma();
         
-        musica1 = new Musica("Ride", "Twenty one pilots", 125);
-        musica2 = new Musica("HeavyDirty Soul", "Twenty one pilots", 90);
-        musica3 = new Musica("Stressed out", "Twenty one pilots", 5);
+        musica1 = new Musica("Ride", "Twenty one pilots", 125, "album");
+        musica2 = new Musica("HeavyDirty Soul", "Twenty one pilots", 90, "album");
+        musica3 = new Musica("Stressed out", "Twenty one pilots", 5, "album");
     }
 
     @Test
@@ -62,7 +62,7 @@ public class PlataformaTests {
     void cadastrarMaisDe500Musicas() {
         for (int i = 1; i <= 501; i++) {
             assertTrue(sonora.cadastrarMusica(
-                    new Musica("Musica " + i, "Artista", 180)));
+                    new Musica("Musica " + i, "Artista", 180, "album")));
         }
 
         assertEquals(501, sonora.getTotalMusicas());

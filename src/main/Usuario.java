@@ -14,26 +14,13 @@ public class Usuario {
 
     public Usuario(String nome, String email) {
 
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Nome inválido: o nome não pode ser vazio.");
-        }
+        setNome(nome);
 
-        if (email == null || email.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "E-mail inválido: o e-mail não pode ser vazio.");
-        }
-
-        if (!email.contains("@")) {
-            throw new IllegalArgumentException(
-                    "E-mail inválido: o e-mail deve conter @.");
-        }
+        setEmail(email);
 
         this.id = contadorId;
         contadorId++;
 
-        this.nome = nome;
-        this.email = email;
         this.seguindo = new ArrayList<>();
     }
 
@@ -45,8 +32,33 @@ public class Usuario {
         return nome;
     }
 
+    public void setNome(String nome){
+
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Nome inválido: o nome não pode ser vazio.");
+        }
+
+        this.nome = nome;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email){
+
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "E-mail inválido: o e-mail não pode ser vazio.");
+        }
+
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException(
+                    "E-mail inválido: o e-mail deve conter @.");
+        }
+
+        this.email = email;
     }
 
     public void seguir(Usuario outro) {
