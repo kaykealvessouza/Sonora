@@ -1,6 +1,6 @@
 package main;
 
-public class Conteudo {
+public abstract class Conteudo {
 
     private int id;
     private static int contadorId = 0;
@@ -20,7 +20,6 @@ public class Conteudo {
         this.reproducoes = 0;
     }
 
-
     public int getId() {
         return id;
     }
@@ -29,7 +28,7 @@ public class Conteudo {
         return titulo;
     }
 
-    public void setTitulo(String titulo){
+    public void setTitulo(String titulo) {
 
         if (titulo == null || titulo.trim().isEmpty()) {
             throw new IllegalArgumentException(
@@ -43,7 +42,7 @@ public class Conteudo {
         return duracaoSegundos;
     }
 
-    public void setDuracaoSegundos(int duracaoSegundos){
+    public void setDuracaoSegundos(int duracaoSegundos) {
 
         if (duracaoSegundos <= 0) {
             throw new IllegalArgumentException(
@@ -60,6 +59,9 @@ public class Conteudo {
 
     public final void reproduzir() {
         this.reproducoes++;
+
+        System.out.println("Reproduzindo: " + getTitulo() +
+                " - " + getCreditos());
     }
 
     public String getDuracaoFormatada() {
@@ -76,4 +78,5 @@ public class Conteudo {
         return "[" + id + "] " + titulo + " (" + getDuracaoFormatada() + ")";
     }
 
+    public abstract String getCreditos();
 }

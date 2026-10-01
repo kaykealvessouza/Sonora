@@ -2,9 +2,8 @@ package main;
 
 public final class PlanoGratuito extends Plano{
 
-    public PlanoGratuito(String nome, int maxDispositivos){
-        super("gratuito", 1);
-        
+    public PlanoGratuito(){
+        super("Gratuito", 1);
     }
 
     @Override

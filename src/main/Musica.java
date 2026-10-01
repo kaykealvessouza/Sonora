@@ -44,7 +44,12 @@ public class Musica extends Conteudo {
     }
 
     @Override
+    public String getCreditos() {
+        return artista + " (" + album + ")";
+    }
+
+    @Override
     public String toString() {
-        return super.toString() + " - " + artista + " (" + album + ")";
+        return super.toString() + " - " + getCreditos();
     }
 }

@@ -28,5 +28,5 @@ public abstract class PlanoPago extends Plano {
     @Override
     public boolean temAnuncios(){
         return false;
-    };
+    }
 }

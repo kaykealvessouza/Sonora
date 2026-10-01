@@ -44,7 +44,12 @@ public class PodCast extends Conteudo {
     }
 
     @Override
+    public String getCreditos() {
+        return "Episódio " + numeroEpisodio + " - " + apresentador;
+    }
+
+    @Override
     public String toString() {
-        return super.toString() + " - " + apresentador + " (Episódio " + numeroEpisodio + ")";
+        return super.toString() + " - " + getCreditos();
     }
 }

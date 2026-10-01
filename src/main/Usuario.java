@@ -10,6 +10,8 @@ public class Usuario {
     private String nome;
     private String email;
 
+    private Plano plano;
+
     private ArrayList<Usuario> seguindo;
 
     public Usuario(String nome, String email) {
@@ -22,6 +24,8 @@ public class Usuario {
         contadorId++;
 
         this.seguindo = new ArrayList<>();
+
+        this.plano = new PlanoGratuito();
     }
 
     public int getId() {
@@ -95,5 +99,19 @@ public class Usuario {
 
     public ArrayList<Usuario> getSeguindo() {
         return seguindo;
+    }
+
+    public Plano getPlano() {
+        return plano;
+    }
+
+    public void assinar(Plano novoPlano) {
+
+        if (novoPlano == null) {
+            throw new IllegalArgumentException(
+                    "Plano inválido: não é possível assinar um plano nulo.");
+        }
+
+        this.plano = novoPlano;
     }
 }

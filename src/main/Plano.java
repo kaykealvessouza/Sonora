@@ -43,4 +43,9 @@ public abstract class Plano {
     public abstract double calcularMensalidade();
 
     public abstract boolean temAnuncios();
+
+    public String resumo() {
+        return nome + ": R$ " + calcularMensalidade()
+                + " por mes, " + maxDispositivos + " dispositivo(s)";
+    }
 }
