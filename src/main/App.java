@@ -1,4 +1,5 @@
 package main;
+
 import java.util.Scanner;
 
 public class App {
@@ -50,6 +51,7 @@ public class App {
             System.out.println("║ 8 - Seguir usuário                   ║");
             System.out.println("║ 9 - Deixar de seguir usuário         ║");
             System.out.println("║ 10 - Listar usuários seguidos        ║");
+            System.out.println("║ 11 - Gerenciar plano                 ║");
             System.out.println("║ 0 - Sair                             ║");
             System.out.println("╚══════════════════════════════════════╝");
 
@@ -313,7 +315,6 @@ public class App {
                                         } else {
                                             System.out.println("\n========== " + playlist.getNome() + " ==========");
                                             encontrada.reproduzir();
-                                            System.out.println("\nReproduzindo: " + encontrada.getTitulo());
                                         }
                                     }
                                 } catch (IllegalArgumentException e) {
@@ -410,7 +411,6 @@ public class App {
                             System.out.println("\nMúsica não encontrada!");
                         } else {
                             encontrada.reproduzir();
-                            System.out.println("\nReproduzindo: " + encontrada.getTitulo());
                         }
                     } catch (IllegalArgumentException e) {
                         System.out.println("\nErro: " + e.getMessage());
@@ -523,6 +523,174 @@ public class App {
                     } catch (IllegalArgumentException e) {
                         System.out.println("\nErro: " + e.getMessage());
                     }
+
+                    break;
+
+                case 11:
+                    // Gerenciar plano
+
+                    int opcaoPlano = 100;
+
+                    do {
+                        System.out.println("\n╔══════════════════════════════════════╗");
+                        System.out.println("║            GERENCIAR PLANO           ║");
+                        System.out.println("╠══════════════════════════════════════╣");
+                        System.out.println("║ 1 - Visualizar plano atual           ║");
+                        System.out.println("║ 2 - Assinar plano gratuito           ║");
+                        System.out.println("║ 3 - Assinar plano individual         ║");
+                        System.out.println("║ 4 - Assinar plano família            ║");
+                        System.out.println("║ 0 - Voltar                            ║");
+                        System.out.println("╚══════════════════════════════════════╝");
+
+                        System.out.print("Opção: ");
+
+                        try {
+                            opcaoPlano = Integer.parseInt(scan.nextLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("\nValor inválido. Digite um número.");
+                            opcaoPlano = 100;
+                        }
+
+                        switch (opcaoPlano) {
+
+                            case 1:
+                                // visualizar plano atual
+
+                                try {
+                                    System.out.print("\nQual o ID do usuário? -> ");
+                                    idUser = Integer.parseInt(scan.nextLine());
+
+                                    user = sonora.buscarUsuarioPorId(idUser);
+
+                                    if (user == null) {
+                                        System.out.println("\nUsuário não encontrado!");
+                                        break;
+                                    }
+
+                                    System.out.println("\n========== PLANO ATUAL ==========");
+                                    System.out.println("Usuário: " + user.getNome());
+                                    System.out.println("Plano: " + user.getPlano().resumo());
+
+                                    if (user.getPlano() instanceof PlanoFamilia) {
+                                        PlanoFamilia planoFamilia = (PlanoFamilia) user.getPlano();
+
+                                        System.out.println("Membros: " + planoFamilia.getQuantidadeMembros());
+                                    }
+
+                                } catch (NumberFormatException e) {
+                                    System.out.println("\nO ID do usuário precisa ser um número.");
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("\nErro: " + e.getMessage());
+                                }
+
+                                break;
+
+                            case 2:
+                                // assinar plano gratuito
+
+                                try {
+                                    System.out.print("\nQual o ID do usuário? -> ");
+                                    idUser = Integer.parseInt(scan.nextLine());
+
+                                    user = sonora.buscarUsuarioPorId(idUser);
+
+                                    if (user == null) {
+                                        System.out.println("\nUsuário não encontrado!");
+                                        break;
+                                    }
+
+                                    user.assinar(new PlanoGratuito());
+
+                                    System.out.println("\nPlano gratuito assinado com sucesso!");
+                                    System.out.println("Plano atual: " + user.getPlano().resumo());
+
+                                } catch (NumberFormatException e) {
+                                    System.out.println("\nO ID do usuário precisa ser um número.");
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("\nErro: " + e.getMessage());
+                                }
+
+                                break;
+
+                            case 3:
+                                // assinar plano individual
+
+                                try {
+                                    System.out.print("\nQual o ID do usuário? -> ");
+                                    idUser = Integer.parseInt(scan.nextLine());
+
+                                    user = sonora.buscarUsuarioPorId(idUser);
+
+                                    if (user == null) {
+                                        System.out.println("\nUsuário não encontrado!");
+                                        break;
+                                    }
+
+                                    System.out.print("Qual o preço mensal do plano individual? -> ");
+                                    double precoMensal = Double.parseDouble(scan.nextLine().replace(",", "."));
+
+                                    PlanoIndividual planoIndividual = new PlanoIndividual(precoMensal);
+
+                                    user.assinar(planoIndividual);
+
+                                    System.out.println("\nPlano individual assinado com sucesso!");
+                                    System.out.println("Plano atual: " + user.getPlano().resumo());
+
+                                } catch (NumberFormatException e) {
+                                    System.out.println("\nO preço precisa ser um número válido.");
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("\nErro: " + e.getMessage());
+                                }
+
+                                break;
+
+                            case 4:
+                                // assinar plano família
+
+                                try {
+                                    System.out.print("\nQual o ID do usuário? -> ");
+                                    idUser = Integer.parseInt(scan.nextLine());
+
+                                    user = sonora.buscarUsuarioPorId(idUser);
+
+                                    if (user == null) {
+                                        System.out.println("\nUsuário não encontrado!");
+                                        break;
+                                    }
+
+                                    System.out.print("Qual o preço mensal do plano família? -> ");
+                                    double precoMensal = Double.parseDouble(scan.nextLine().replace(",", "."));
+
+                                    System.out.print("Quantos membros terá o plano família? -> ");
+                                    int quantidadeMembros = Integer.parseInt(scan.nextLine());
+
+                                    PlanoFamilia planoFamilia = new PlanoFamilia(
+                                            precoMensal,
+                                            quantidadeMembros);
+
+                                    user.assinar(planoFamilia);
+
+                                    System.out.println("\nPlano família assinado com sucesso!");
+                                    System.out.println("Plano atual: " + user.getPlano().resumo());
+                                    System.out.println("Membros: " + planoFamilia.getQuantidadeMembros());
+
+                                } catch (NumberFormatException e) {
+                                    System.out.println("\nO preço e a quantidade de membros precisam ser números válidos.");
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("\nErro: " + e.getMessage());
+                                }
+
+                                break;
+
+                            case 0:
+                                System.out.println("\nVoltando...");
+                                break;
+
+                            default:
+                                System.out.println("\nOpção inválida.");
+                        }
+
+                    } while (opcaoPlano != 0);
 
                     break;
 
