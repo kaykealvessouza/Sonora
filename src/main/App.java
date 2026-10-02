@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -20,6 +21,14 @@ public class App {
 
         int idMusica;
 
+        // Podcast
+        PodCast podcast;
+        ArrayList<PodCast> podcasts = new ArrayList<>();
+
+        String apresentador;
+        int numeroEpisodio;
+        int idPodcast;
+
         // Usuario
         Usuario user;
         Usuario dono;
@@ -37,21 +46,45 @@ public class App {
         int opcao = 100;
         String entrada;
 
+        /*
+         * Conteudo e Plano são classes abstratas e não podem ser instanciadas.
+         *
+         * Conteudo c = new Conteudo("Generico", 120);
+         * Erro de compilação: Conteudo é uma classe abstrata e não pode ser
+         * instanciada diretamente.
+         *
+         * Plano p = new Plano("Generico", 1);
+         * Erro de compilação: Plano é uma classe abstrata e não pode ser
+         * instanciada diretamente.
+         */
+
+        /*
+         * PlanoGratuito é uma classe final e não pode ser estendida.
+         *
+         * class PlanoEspecial extends PlanoGratuito {
+         * }
+         *
+         * Erro de compilação: não é possível herdar de uma classe final.
+         */
+
         do {
             System.out.println("\n\n╔══════════════════════════════════════╗");
             System.out.println("║               SONORA                 ║");
             System.out.println("╠══════════════════════════════════════╣");
             System.out.println("║ 1 - Cadastrar música manualmente     ║");
-            System.out.println("║ 2 - Cadastrar usuário                ║");
-            System.out.println("║ 3 - Gerenciar playlists              ║");
-            System.out.println("║ 4 - Buscar música por ID             ║");
-            System.out.println("║ 5 - Buscar música por título         ║");
-            System.out.println("║ 6 - Reproduzir uma música            ║");
-            System.out.println("║ 7 - Listar acervo                    ║");
-            System.out.println("║ 8 - Seguir usuário                   ║");
-            System.out.println("║ 9 - Deixar de seguir usuário         ║");
-            System.out.println("║ 10 - Listar usuários seguidos        ║");
-            System.out.println("║ 11 - Gerenciar plano                 ║");
+            System.out.println("║ 2 - Cadastrar podcast                ║");
+            System.out.println("║ 3 - Cadastrar usuário                ║");
+            System.out.println("║ 4 - Gerenciar playlists              ║");
+            System.out.println("║ 5 - Buscar música por ID             ║");
+            System.out.println("║ 6 - Buscar música por título         ║");
+            System.out.println("║ 7 - Reproduzir uma música            ║");
+            System.out.println("║ 8 - Buscar podcast por ID            ║");
+            System.out.println("║ 9 - Reproduzir um podcast            ║");
+            System.out.println("║ 10 - Listar acervo                   ║");
+            System.out.println("║ 11 - Seguir usuário                  ║");
+            System.out.println("║ 12 - Deixar de seguir usuário        ║");
+            System.out.println("║ 13 - Listar usuários seguidos        ║");
+            System.out.println("║ 14 - Gerenciar plano                 ║");
             System.out.println("║ 0 - Sair                             ║");
             System.out.println("╚══════════════════════════════════════╝");
 
@@ -101,6 +134,42 @@ public class App {
                     break;
 
                 case 2:
+                    // cadastrar podcast
+
+                    try {
+                        System.out.print("\nQual o título do podcast? -> ");
+                        titulo = scan.nextLine();
+
+                        System.out.print("\nQual o nome do apresentador? -> ");
+                        apresentador = scan.nextLine();
+
+                        System.out.print("\nQual o número do episódio? -> ");
+                        numeroEpisodio = Integer.parseInt(scan.nextLine());
+
+                        System.out.print("\nQuantos segundos o episódio possui? -> ");
+                        duracaoSegundos = Integer.parseInt(scan.nextLine());
+
+                        podcast = new PodCast(
+                                titulo,
+                                duracaoSegundos,
+                                apresentador,
+                                numeroEpisodio);
+
+                        podcasts.add(podcast);
+
+                        System.out.println("\nPodcast cadastrado com sucesso!");
+                        System.out.println(podcast);
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nO número do episódio e a duração precisam ser números inteiros.");
+
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\nErro: " + e.getMessage());
+                    }
+
+                    break;
+
+                case 3:
                     // cadastrar usuário
 
                     try {
@@ -124,7 +193,7 @@ public class App {
 
                     break;
 
-                case 3:
+                case 4:
 
                     // Gerenciar playlists
 
@@ -189,8 +258,8 @@ public class App {
                             case 2:
                                 // Adicionar música à playlist
                                 try {
-                                    System.out
-                                            .print("\nQual o ID ou nome da música que deseja adicionar a música? -> ");
+                                    System.out.print(
+                                            "\nQual o ID ou nome da música que deseja adicionar a música? -> ");
                                     entrada = scan.nextLine();
 
                                     encontrada = sonora.buscarMusicaGeral(entrada);
@@ -209,8 +278,8 @@ public class App {
                                             System.out.println("Playlist não existe");
                                         } else {
                                             if (playlist.adicionar(encontrada)) {
-                                                System.out
-                                                        .println("\n========== " + playlist.getNome() + " ==========");
+                                                System.out.println(
+                                                        "\n========== " + playlist.getNome() + " ==========");
                                                 System.out.println("Música adicionada com sucesso!");
                                             } else {
                                                 System.out.println("Não foi possível adicionar!");
@@ -250,8 +319,8 @@ public class App {
                                             System.out.println("\nMúsica não encontrada!");
                                         } else {
                                             if (playlist.removerNaPosicao(posicaoEncontrada)) {
-                                                System.out
-                                                        .println("\n========== " + playlist.getNome() + " ==========");
+                                                System.out.println(
+                                                        "\n========== " + playlist.getNome() + " ==========");
                                                 System.out.println("Música removida com sucesso!");
                                             } else {
                                                 System.out.println("Não foi possível remover a música!");
@@ -278,6 +347,7 @@ public class App {
                                         System.out.println("Playlist não existe");
                                     } else {
                                         System.out.println("\n========== " + playlist.getNome() + " ==========");
+
                                         for (int i = 1; i <= playlist.getQuantidade(); i++) {
                                             encontrada = playlist.getNaPosicao(i);
                                             exibirMusica(encontrada);
@@ -295,7 +365,8 @@ public class App {
                                 // Reproduzir música da playlist
 
                                 try {
-                                    System.out.print("\nQual o nome da playlist que deseja reproduzir a música? -> ");
+                                    System.out.print(
+                                            "\nQual o nome da playlist que deseja reproduzir a música? -> ");
                                     entrada = scan.nextLine();
 
                                     playlist = sonora.buscarPlaylist(entrada);
@@ -303,7 +374,8 @@ public class App {
                                     if (playlist == null) {
                                         System.out.println("Playlist não existe");
                                     } else {
-                                        System.out.print("\nQual o ID ou nome da música que deseja reproduzir? -> ");
+                                        System.out.print(
+                                                "\nQual o ID ou nome da música que deseja reproduzir? -> ");
                                         entrada = scan.nextLine();
 
                                         encontrada = sonora.buscarMusicaGeral(entrada);
@@ -313,7 +385,8 @@ public class App {
                                         } else if (playlist.getPosicaoDaMusica(encontrada) == -1) {
                                             System.out.println("\nMúsica não encontrada na playlist!");
                                         } else {
-                                            System.out.println("\n========== " + playlist.getNome() + " ==========");
+                                            System.out.println(
+                                                    "\n========== " + playlist.getNome() + " ==========");
                                             encontrada.reproduzir();
                                         }
                                     }
@@ -327,7 +400,8 @@ public class App {
                                 // Reproduzir playlist inteira
 
                                 try {
-                                    System.out.print("\nQual o nome da playlist que deseja reproduzir inteira? -> ");
+                                    System.out.print(
+                                            "\nQual o nome da playlist que deseja reproduzir inteira? -> ");
                                     entrada = scan.nextLine();
 
                                     playlist = sonora.buscarPlaylist(entrada);
@@ -335,7 +409,8 @@ public class App {
                                     if (playlist == null) {
                                         System.out.println("Playlist não existe");
                                     } else {
-                                        System.out.println("\n========== " + playlist.getNome() + " ==========");
+                                        System.out.println(
+                                                "\n========== " + playlist.getNome() + " ==========");
                                         playlist.reproduzirTudo();
                                     }
                                 } catch (IllegalArgumentException e) {
@@ -356,7 +431,7 @@ public class App {
 
                     break;
 
-                case 4:
+                case 5:
                     // buscar música por ID
                     try {
                         System.out.print("\nQual o id da música que deseja procurar? -> ");
@@ -378,7 +453,7 @@ public class App {
 
                     break;
 
-                case 5:
+                case 6:
                     // buscar música por título
 
                     try {
@@ -399,8 +474,9 @@ public class App {
 
                     break;
 
-                case 6:
+                case 7:
                     // reproduzir música
+
                     try {
                         System.out.print("\nQual o ID ou nome da música que deseja reproduzir? -> ");
                         entrada = scan.nextLine();
@@ -411,28 +487,9 @@ public class App {
                             System.out.println("\nMúsica não encontrada!");
                         } else {
                             encontrada.reproduzir();
-                        }
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("\nErro: " + e.getMessage());
-                    }
 
-                    break;
-
-                case 7:
-                    // listar acervo
-
-                    try {
-                        System.out.println("\n========== ACERVO SONORA ==========");
-
-                        if (sonora.getTotalMusicas() == 0) {
-                            System.out.println("O acervo está vazio.");
-                            break;
-                        }
-
-                        for (int i = 1; i <= sonora.getTotalMusicas(); i++) {
-                            encontrada = sonora.getMusicaNaPosicao(i);
-
-                            exibirMusica(encontrada);
+                            System.out.println(
+                                    "Total de reproduções: " + encontrada.getReproducoes());
                         }
                     } catch (IllegalArgumentException e) {
                         System.out.println("\nErro: " + e.getMessage());
@@ -441,6 +498,104 @@ public class App {
                     break;
 
                 case 8:
+                    // buscar podcast por ID
+
+                    try {
+                        System.out.print("\nQual o ID do podcast que deseja procurar? -> ");
+                        idPodcast = Integer.parseInt(scan.nextLine());
+
+                        PodCast encontradoPodcast = null;
+
+                        for (PodCast p : podcasts) {
+                            if (p.getId() == idPodcast) {
+                                encontradoPodcast = p;
+                                break;
+                            }
+                        }
+
+                        if (encontradoPodcast == null) {
+                            System.out.println("\nPodcast não encontrado!");
+                        } else {
+                            exibirPodcast(encontradoPodcast);
+                        }
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nO ID do podcast precisa ser um número.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\nErro: " + e.getMessage());
+                    }
+
+                    break;
+
+                case 9:
+                    // reproduzir podcast
+
+                    try {
+                        System.out.print("\nQual o ID do podcast que deseja reproduzir? -> ");
+                        idPodcast = Integer.parseInt(scan.nextLine());
+
+                        PodCast encontradoPodcast = null;
+
+                        for (PodCast p : podcasts) {
+                            if (p.getId() == idPodcast) {
+                                encontradoPodcast = p;
+                                break;
+                            }
+                        }
+
+                        if (encontradoPodcast == null) {
+                            System.out.println("\nPodcast não encontrado!");
+                        } else {
+                            encontradoPodcast.reproduzir();
+
+                            System.out.println(
+                                    "Total de reproduções: " + encontradoPodcast.getReproducoes());
+                        }
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nO ID do podcast precisa ser um número.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\nErro: " + e.getMessage());
+                    }
+
+                    break;
+
+                case 10:
+                    // listar acervo
+
+                    try {
+                        System.out.println("\n========== ACERVO SONORA ==========");
+
+                        if (sonora.getTotalMusicas() == 0 && podcasts.isEmpty()) {
+                            System.out.println("O acervo está vazio.");
+                            break;
+                        }
+
+                        if (sonora.getTotalMusicas() > 0) {
+                            System.out.println("\n---------- MÚSICAS ----------");
+
+                            for (int i = 1; i <= sonora.getTotalMusicas(); i++) {
+                                encontrada = sonora.getMusicaNaPosicao(i);
+
+                                exibirMusica(encontrada);
+                            }
+                        }
+
+                        if (!podcasts.isEmpty()) {
+                            System.out.println("\n---------- PODCASTS ----------");
+
+                            for (PodCast p : podcasts) {
+                                exibirPodcast(p);
+                            }
+                        }
+
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\nErro: " + e.getMessage());
+                    }
+
+                    break;
+
+                case 11:
                     // seguir usuário
                     try {
                         System.out.print("\nQual o ID do usuário que irá seguir? -> ");
@@ -458,7 +613,11 @@ public class App {
                         }
 
                         seguidor.seguir(seguido);
-                        System.out.println("\n" + seguidor.getNome() + " agora segue " + seguido.getNome() + ".");
+
+                        System.out.println(
+                                "\n" + seguidor.getNome() + " agora segue "
+                                        + seguido.getNome() + ".");
+
                     } catch (NumberFormatException e) {
                         System.out.println("\nO ID do usuário precisa ser um número.");
                     } catch (IllegalArgumentException e) {
@@ -467,7 +626,7 @@ public class App {
 
                     break;
 
-                case 9:
+                case 12:
                     // deixar de seguir usuário
                     try {
                         System.out.print("\nQual o ID do usuário que deixará de seguir? -> ");
@@ -485,7 +644,11 @@ public class App {
                         }
 
                         seguidor.deixarDeSeguir(seguido);
-                        System.out.println("\n" + seguidor.getNome() + " deixou de seguir " + seguido.getNome() + ".");
+
+                        System.out.println(
+                                "\n" + seguidor.getNome() + " deixou de seguir "
+                                        + seguido.getNome() + ".");
+
                     } catch (NumberFormatException e) {
                         System.out.println("\nO ID do usuário precisa ser um número.");
                     } catch (IllegalArgumentException e) {
@@ -494,7 +657,7 @@ public class App {
 
                     break;
 
-                case 10:
+                case 13:
                     // listar usuários seguidos
                     try {
                         System.out.print("\nQual o ID do usuário? -> ");
@@ -507,7 +670,9 @@ public class App {
                             break;
                         }
 
-                        System.out.println("\n========== USUÁRIOS SEGUIDOS POR " + seguidor.getNome() + " ==========");
+                        System.out.println(
+                                "\n========== USUÁRIOS SEGUIDOS POR "
+                                        + seguidor.getNome() + " ==========");
 
                         if (seguidor.getQuantidadeSeguindo() == 0) {
                             System.out.println("Este usuário não segue ninguém.");
@@ -515,9 +680,12 @@ public class App {
                         }
 
                         for (Usuario seguido : seguidor.getSeguindo()) {
-                            System.out.println("ID: " + seguido.getId() + " | Nome: " + seguido.getNome()
-                                    + " | E-mail: " + seguido.getEmail());
+                            System.out.println(
+                                    "ID: " + seguido.getId()
+                                            + " | Nome: " + seguido.getNome()
+                                            + " | E-mail: " + seguido.getEmail());
                         }
+
                     } catch (NumberFormatException e) {
                         System.out.println("\nO ID do usuário precisa ser um número.");
                     } catch (IllegalArgumentException e) {
@@ -526,7 +694,7 @@ public class App {
 
                     break;
 
-                case 11:
+                case 14:
                     // Gerenciar plano
 
                     int opcaoPlano = 100;
@@ -572,9 +740,12 @@ public class App {
                                     System.out.println("Plano: " + user.getPlano().resumo());
 
                                     if (user.getPlano() instanceof PlanoFamilia) {
-                                        PlanoFamilia planoFamilia = (PlanoFamilia) user.getPlano();
+                                        PlanoFamilia planoFamilia =
+                                                (PlanoFamilia) user.getPlano();
 
-                                        System.out.println("Membros: " + planoFamilia.getQuantidadeMembros());
+                                        System.out.println(
+                                                "Membros: "
+                                                        + planoFamilia.getQuantidadeMembros());
                                     }
 
                                 } catch (NumberFormatException e) {
@@ -602,7 +773,8 @@ public class App {
                                     user.assinar(new PlanoGratuito());
 
                                     System.out.println("\nPlano gratuito assinado com sucesso!");
-                                    System.out.println("Plano atual: " + user.getPlano().resumo());
+                                    System.out.println(
+                                            "Plano atual: " + user.getPlano().resumo());
 
                                 } catch (NumberFormatException e) {
                                     System.out.println("\nO ID do usuário precisa ser um número.");
@@ -626,18 +798,25 @@ public class App {
                                         break;
                                     }
 
-                                    System.out.print("Qual o preço mensal do plano individual? -> ");
-                                    double precoMensal = Double.parseDouble(scan.nextLine().replace(",", "."));
+                                    System.out.print(
+                                            "Qual o preço mensal do plano individual? -> ");
 
-                                    PlanoIndividual planoIndividual = new PlanoIndividual(precoMensal);
+                                    double precoMensal = Double.parseDouble(
+                                            scan.nextLine().replace(",", "."));
+
+                                    PlanoIndividual planoIndividual =
+                                            new PlanoIndividual(precoMensal);
 
                                     user.assinar(planoIndividual);
 
-                                    System.out.println("\nPlano individual assinado com sucesso!");
-                                    System.out.println("Plano atual: " + user.getPlano().resumo());
+                                    System.out.println(
+                                            "\nPlano individual assinado com sucesso!");
+                                    System.out.println(
+                                            "Plano atual: " + user.getPlano().resumo());
 
                                 } catch (NumberFormatException e) {
-                                    System.out.println("\nO preço precisa ser um número válido.");
+                                    System.out.println(
+                                            "\nO preço precisa ser um número válido.");
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("\nErro: " + e.getMessage());
                                 }
@@ -658,24 +837,36 @@ public class App {
                                         break;
                                     }
 
-                                    System.out.print("Qual o preço mensal do plano família? -> ");
-                                    double precoMensal = Double.parseDouble(scan.nextLine().replace(",", "."));
+                                    System.out.print(
+                                            "Qual o preço mensal do plano família? -> ");
 
-                                    System.out.print("Quantos membros terá o plano família? -> ");
-                                    int quantidadeMembros = Integer.parseInt(scan.nextLine());
+                                    double precoMensal = Double.parseDouble(
+                                            scan.nextLine().replace(",", "."));
 
-                                    PlanoFamilia planoFamilia = new PlanoFamilia(
-                                            precoMensal,
-                                            quantidadeMembros);
+                                    System.out.print(
+                                            "Quantos membros terá o plano família? -> ");
+
+                                    int quantidadeMembros =
+                                            Integer.parseInt(scan.nextLine());
+
+                                    PlanoFamilia planoFamilia =
+                                            new PlanoFamilia(
+                                                    precoMensal,
+                                                    quantidadeMembros);
 
                                     user.assinar(planoFamilia);
 
-                                    System.out.println("\nPlano família assinado com sucesso!");
-                                    System.out.println("Plano atual: " + user.getPlano().resumo());
-                                    System.out.println("Membros: " + planoFamilia.getQuantidadeMembros());
+                                    System.out.println(
+                                            "\nPlano família assinado com sucesso!");
+                                    System.out.println(
+                                            "Plano atual: " + user.getPlano().resumo());
+                                    System.out.println(
+                                            "Membros: "
+                                                    + planoFamilia.getQuantidadeMembros());
 
                                 } catch (NumberFormatException e) {
-                                    System.out.println("\nO preço e a quantidade de membros precisam ser números válidos.");
+                                    System.out.println(
+                                            "\nO preço e a quantidade de membros precisam ser números válidos.");
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("\nErro: " + e.getMessage());
                                 }
@@ -713,5 +904,14 @@ public class App {
         System.out.println("Artista: " + musica.getArtista());
         System.out.println("Duração: " + musica.getDuracaoFormatada());
         System.out.println("Reproduções: " + musica.getReproducoes());
+    }
+
+    public static void exibirPodcast(PodCast podcast) {
+        System.out.println("\nID: " + podcast.getId());
+        System.out.println("Título: " + podcast.getTitulo());
+        System.out.println("Apresentador: " + podcast.getApresentador());
+        System.out.println("Episódio: " + podcast.getNumeroEpisodio());
+        System.out.println("Duração: " + podcast.getDuracaoFormatada());
+        System.out.println("Reproduções: " + podcast.getReproducoes());
     }
 }
